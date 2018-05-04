@@ -21,7 +21,7 @@ func main() {
     fmt.Printf("Usage: %s <option> <action>\n\n", appname)
     flag.PrintDefaults()
     fmt.Println()
-    fmt.Println(`Action is one of:
+    fmt.Print(`Action is one of:
   [e]dit                 edit tunnel definitions
   [l]ist <id> <id> ...   list tunnels
   [o]pen <id> <id> ...   open tunnels

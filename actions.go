@@ -46,7 +46,7 @@ func openTunnel(tunnel Tunnel) {
     "-L", forward, tunnel.Host)
   cmd.Stdin = os.Stdin
   cmd.Stdout = os.Stdout
-  if debug { log.Printf("\nCommand:", cmd) }
+  if debug { log.Printf("\nCommand: %v", cmd) }
   err := cmd.Run()
   if err != nil { log.Fatal(err) }
   fmt.Println("done.")
@@ -66,7 +66,7 @@ func closeTunnel(tunnel Tunnel) {
   }
   fmt.Printf("Closing tunnel id '%d'... ", tunnel.Id)
   cmd := exec.Command(ssh, "-S", socket, "-O", "exit", tunnel.Host)
-  if debug { log.Printf("\nCommand:", cmd) }
+  if debug { log.Printf("\nCommand: %v", cmd) }
   e := cmd.Run()
   if e != nil { log.Fatal(e) }
   fmt.Println("done.")
