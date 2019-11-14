@@ -48,7 +48,6 @@ func openTunnel(tunnel Tunnel) {
 		"-L", forward, tunnel.Host)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
-	//var stderr bytes.Buffer
 	cmd.Stderr = os.Stderr
 	if debug {
 		log.Printf("\nCommand: %v", cmd)
