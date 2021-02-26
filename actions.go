@@ -5,6 +5,8 @@ import (
 	"log"
 	"os"
 	"os/exec"
+
+	. "github.com/lyderic/tools"
 )
 
 func listTunnels(tunnels []Tunnel, ids []int) {
@@ -44,13 +46,19 @@ func openTunnel(tunnel Tunnel) {
 	}
 	fmt.Printf("Opening tunnel id '%d'... ", tunnel.Id)
 	forward := fmt.Sprintf("%d:localhost:%d", tunnel.LocalPort, tunnel.RemotePort)
-	cmd := exec.Command(ssh, "-f", "-n", "-N", "-M", "-S", getSocket(tunnel),
+	cmd := exec.Command(ssh,
+		"-f",                    // Requests ssh to go to background just before command execution
+		"-n",                    // Prevents reading from stdin
+		"-N",                    // Do not execute a remote command
+		"-M",                    // Places the ssh client into “master” mode for connection sharing
+		"-T",                    // Disable pseudo-terminal allocation
+		"-S", getSocket(tunnel), // Bind to a socket
 		"-L", forward, tunnel.Host)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	if debug {
-		log.Printf("\nCommand: %v", cmd)
+		Cyan("\n[XeQ]:%v", cmd.Args)
 	}
 	err := cmd.Run()
 	if err != nil {
