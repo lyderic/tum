@@ -14,6 +14,9 @@ var rootCmd = &cobra.Command{
 	Use:                   "tum",
 	Short:                 "tum application",
 	DisableFlagsInUseLine: true,
+	Run: func(cmd *cobra.Command, args []string) {
+		list()
+	},
 }
 
 func Execute() {
