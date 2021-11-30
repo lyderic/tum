@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"strings"
 
+	. "github.com/lyderic/tools"
 	"github.com/spf13/cobra"
 )
 
@@ -19,11 +21,11 @@ var openCmd = &cobra.Command{
 }
 
 func openTunnel(tunnel Tunnel) {
+	Blue("[Opening tunnel id %d %q]\n", tunnel.Id, tunnel.Description)
 	if socketIsActive(tunnel) {
-		fmt.Printf("Tunnel id %d (%s) is already open.\n", tunnel.Id, tunnel.Description)
+		Yellow("Tunnel id %d (%s) is already open.\n", tunnel.Id, tunnel.Description)
 		return
 	}
-	fmt.Printf("Opening tunnel id '%d'... ", tunnel.Id)
 	forward := fmt.Sprintf("%d:localhost:%d", tunnel.LocalPort, tunnel.RemotePort)
 	cmd := exec.Command("ssh",
 		"-f",                    // Requests ssh to go to background just before command execution
@@ -32,14 +34,18 @@ func openTunnel(tunnel Tunnel) {
 		"-M",                    // Places the ssh client into “master” mode for connection sharing
 		"-T",                    // Disable pseudo-terminal allocation
 		"-S", getSocket(tunnel), // Bind to a socket
+		"-o", "ConnectTimeout=5", // Try to connect for 5s max.
 		"-L", forward, tunnel.Host)
-	cmd.Stdin, cmd.Stdout, cmd.Stderr = os.Stdin, os.Stdout, os.Stderr
+	cmd.Stdin, cmd.Stdout = os.Stdin, os.Stdout
+	var errBuffer strings.Builder
+	cmd.Stderr = &errBuffer
 	Debug("\n[XeQ]:%v", cmd.Args)
 	err := cmd.Run()
 	if err != nil {
+		Redln(strings.TrimSpace(errBuffer.String()))
 		return
 	}
-	fmt.Println("done.")
+	Greenln("> Ok")
 }
 
 func init() {
