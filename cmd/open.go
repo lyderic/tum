@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-	"strings"
 
 	. "github.com/lyderic/tools"
 	"github.com/spf13/cobra"
@@ -36,13 +35,11 @@ func openTunnel(tunnel Tunnel) {
 		"-S", getSocket(tunnel), // Bind to a socket
 		"-o", "ConnectTimeout=5", // Try to connect for 5s max.
 		"-L", forward, tunnel.Host)
-	cmd.Stdin, cmd.Stdout = os.Stdin, os.Stdout
-	var errBuffer strings.Builder
-	cmd.Stderr = &errBuffer
+	cmd.Stdin, cmd.Stdout, cmd.Stderr = os.Stdin, os.Stdout, os.Stderr
 	Debug("\n[XeQ]:%v", cmd.Args)
 	err := cmd.Run()
 	if err != nil {
-		Redln(strings.TrimSpace(errBuffer.String()))
+		Redln("> Failed!")
 		return
 	}
 	Greenln("> Ok")
