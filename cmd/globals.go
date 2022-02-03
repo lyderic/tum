@@ -3,7 +3,7 @@ package cmd
 import "os"
 
 const (
-	VERSION = "0.2.6"
+	VERSION = "0.2.7"
 	APPNAME = "tum"
 )
 

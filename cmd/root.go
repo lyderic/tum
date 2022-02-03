@@ -14,6 +14,7 @@ var rootCmd = &cobra.Command{
 	Use:                   "tum",
 	Short:                 "tum application",
 	DisableFlagsInUseLine: true,
+	CompletionOptions:     cobra.CompletionOptions{HiddenDefaultCmd: true},
 	Run: func(cmd *cobra.Command, args []string) {
 		list()
 	},

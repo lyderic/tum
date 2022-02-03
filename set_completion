@@ -1,5 +1,0 @@
-#!/bin/echo please source this script: . 
-
-go install
-tum completion bash | sudo tee /etc/bash_completion.d/tum.completion
-. /etc/bash_completion.d/tum.completion
