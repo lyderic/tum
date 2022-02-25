@@ -3,8 +3,8 @@ module tum
 go 1.17
 
 require (
-	github.com/jedib0t/go-pretty/v6 v6.2.5
-	github.com/lyderic/tools v0.3.6
+	github.com/jedib0t/go-pretty/v6 v6.2.7
+	github.com/lyderic/tools v0.3.7
 	github.com/spf13/cobra v1.3.0
 	github.com/spf13/viper v1.10.1
 	gopkg.in/yaml.v2 v2.4.0
