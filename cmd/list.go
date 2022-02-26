@@ -23,6 +23,7 @@ func list() {
 	tunnels := loadTunnels()
 	t := table.NewWriter()
 	t.SetOutputMirror(os.Stdout)
+	t.SetStyle(table.StyleLight)
 	t.AppendHeader(table.Row{"ID", "ON", "Host", "Lport", "Rport", "Description"})
 	for _, tunnel := range tunnels {
 		row := table.Row{
