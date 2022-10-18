@@ -19,7 +19,7 @@ var closeCmd = &cobra.Command{
 }
 
 func closeTunnel(tunnel Tunnel) {
-	socket := getSocket(tunnel)
+	socket := tunnel.getSocket()
 	if !socketIsActive(tunnel) {
 		fmt.Printf("Tunnel id %d (%s) is not open.\n", tunnel.Id, tunnel.Description)
 		return
