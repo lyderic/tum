@@ -27,12 +27,12 @@ func openTunnel(tunnel Tunnel) {
 	}
 	forward := fmt.Sprintf("%d:localhost:%d", tunnel.LocalPort, tunnel.RemotePort)
 	cmd := exec.Command("ssh",
-		"-f",                     // Requests ssh to go to background just before command execution
-		"-n",                     // Prevents reading from stdin
-		"-N",                     // Do not execute a remote command
-		"-M",                     // Places the ssh client into “master” mode for connection sharing
-		"-T",                     // Disable pseudo-terminal allocation
-		"-S", tunnel.getSocket(), // Bind to a socket
+		"-f",                          // Requests ssh to go to background just before command execution
+		"-n",                          // Prevents reading from stdin
+		"-N",                          // Do not execute a remote command
+		"-M",                          // Places the ssh client into “master” mode for connection sharing
+		"-T",                          // Disable pseudo-terminal allocation
+		"-S", tunnel.getSocket().Path, // Bind to a socket
 		"-o", "ConnectTimeout=5", // Try to connect for 5s max.
 		"-L", forward, tunnel.Host)
 	cmd.Stdin, cmd.Stdout, cmd.Stderr = os.Stdin, os.Stdout, os.Stderr

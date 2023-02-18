@@ -16,12 +16,12 @@ type Socket struct {
 func socketIsActive(tunnel Tunnel) (ok bool) {
 	socket := tunnel.getTheSocket()
 	if socket.exists() {
-		cmd := exec.Command("ssh", "-S", string(socket), "-O", "check", tunnel.Host)
+		cmd := exec.Command("ssh", "-S", socket.Path, "-O", "check", tunnel.Host)
 		Debug("[XeQ] %v\n", cmd.Args)
 		err := cmd.Run()
 		if err != nil {
 			fmt.Println("Removing invalid socket:", socket)
-			os.Remove(socket)
+			os.Remove(socket.Path)
 			ok = false
 		} else {
 			return true
@@ -33,7 +33,7 @@ func socketIsActive(tunnel Tunnel) (ok bool) {
 }
 
 func (socket Socket) exists() bool {
-	return PathExists(socket)
+	return PathExists(socket.Path)
 }
 
 /*
@@ -43,5 +43,5 @@ func exists(socket string) bool {
 */
 
 func getRunning(tunnel Tunnel) bool {
-	return exists(tunnel.getSocket())
+	return tunnel.getSocket().Exists
 }

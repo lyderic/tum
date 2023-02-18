@@ -25,7 +25,7 @@ func closeTunnel(tunnel Tunnel) {
 		return
 	}
 	fmt.Printf("Closing tunnel id '%d'... ", tunnel.Id)
-	cmd := exec.Command("ssh", "-S", socket, "-O", "exit", tunnel.Host)
+	cmd := exec.Command("ssh", "-S", socket.Path, "-O", "exit", tunnel.Host)
 	Debug("\nCommand: %v", cmd)
 	e := cmd.Run()
 	if e != nil {

@@ -41,8 +41,8 @@ func (tunnel Tunnel) getSocketPath() (path string) {
 }
 
 func (tunnel Tunnel) getTheSocket() (socket Socket) {
-	socket = fmt.Sprintf("%s/%s-%02d-socket",
+	socket.Path = fmt.Sprintf("%s/%s-%02d-socket",
 		os.Getenv("XDG_RUNTIME_DIR"), APPNAME, tunnel.Id)
-	Debug("socket path: %s\n", socket)
+	Debug("socket path: %s\n", socket.Path)
 	return
 }
