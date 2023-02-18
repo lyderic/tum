@@ -11,6 +11,7 @@ require (
 )
 
 require (
+	golang.org/x/net v0.7.0
 	github.com/fatih/color v1.13.0 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
